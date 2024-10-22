@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Romantic Surprise</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #000;
+            position: relative;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Arial', sans-serif;
+            color: white;
+        }
+
+        .intro-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            font-size: 24px;
+            cursor: pointer;
+            z-index: 10;
+        }
+
+        .intro-screen h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        /* Aumentamos el tamaño de las estrellas */
+        .star {
+            position: absolute;
+            bottom: 0;
+            width: 25px; /* Tamaño aumentado */
+            height: 25px; /* Tamaño aumentado */
+            background-color: #bb86fc;
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            animation: float 4s ease-in-out infinite, twinkle 1.5s ease-in-out infinite;
+        }
+
+        /* Animaciones adicionales */
+        @keyframes twinkle {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.2); }
+        }
+
+        .word {
+            position: absolute;
+            bottom: 0;
+            color: #ffcccb;
+            font-size: 20px;
+            animation: float 5s ease-in-out infinite;
+        }
+
+        /* Animación de flotación */
+        @keyframes float {
+            0% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh); /* Asegura que las estrellas suban más alto */
+                opacity: 0;
+            }
+        }
+
+        /* Responsivo para teléfonos */
+        @media (max-width: 600px) {
+            .intro-screen h1 {
+                font-size: 32px;
+            }
+
+            .word {
+                font-size: 16px;
+            }
+
+            .star {
+                width: 20px; /* Tamaño menor para móviles */
+                height: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="intro-screen" id="introScreen">
+    <div>
+        <h1>Haz click para ver una sorpresa</h1>
+        <p>💖 Te va a encantar 💖</p>
+    </div>
+</div>
+
+<script>
+    const words = ["love", "dream", "hope", "joy", "peace", "faith"];
+
+    function createStar() {
+        const star = document.createElement('div');
+        star.classList.add('star');
+
+        // Generar una posición horizontal aleatoria
+        star.style.left = Math.random() * window.innerWidth + 'px';
+
+        // Añadir la estrella al body
+        document.body.appendChild(star);
+
+        // Eliminar la estrella después de la animación
+        setTimeout(() => {
+            star.remove();
+        }, 4000); // Tiempo ajustado a la nueva animación
+    }
+
+    function createWord() {
+        const word = document.createElement('div');
+        word.classList.add('word');
+
+        // Seleccionar una palabra aleatoria
+        word.textContent = words[Math.floor(Math.random() * words.length)];
+
+        // Generar una posición horizontal aleatoria
+        word.style.left = Math.random() * window.innerWidth + 'px';
+
+        // Añadir la palabra al body
+        document.body.appendChild(word);
+
+        // Eliminar la palabra después de la animación
+        setTimeout(() => {
+            word.remove();
+        }, 5000);
+    }
+
+    // Iniciar las animaciones solo cuando el usuario hace clic en la pantalla
+    document.getElementById('introScreen').addEventListener('click', function() {
+        this.style.display = 'none'; // Ocultar la pantalla inicial
+        setInterval(createStar, 200); // Más estrellas con mayor frecuencia
+        setInterval(createWord, 1000); // Más palabras
+    });
+</script>
+
+</body>
+</html>
